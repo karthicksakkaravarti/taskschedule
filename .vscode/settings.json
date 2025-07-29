@@ -1,0 +1,116 @@
+{
+    "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.ruffEnabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.formatting.provider": "none",
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.cwd": "${workspaceFolder}/taskschedule",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/node_modules": true,
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.egg-info": true,
+        "**/.pytest_cache": true,
+        "**/.coverage": true,
+        "**/htmlcov": true,
+        "**/.mypy_cache": true,
+        "**/.ruff_cache": true
+    },
+    "files.associations": {
+        "*.html": "html",
+        "*.py": "python",
+        "Dockerfile*": "dockerfile",
+        "docker-compose*.yml": "dockercompose",
+        "requirements*.txt": "pip-requirements"
+    },
+    "emmet.includeLanguages": {
+        "django-html": "html"
+    },
+    "html.format.indentInnerHtml": true,
+    "html.format.templating": true,
+    "djLint.useEditorIndentation": true,
+    "djLint.formatHtml": true,
+    "djLint.lintHtml": true,
+    "[html]": {
+        "editor.defaultFormatter": "monosans.djlint"
+    },
+    "[django-html]": {
+        "editor.defaultFormatter": "monosans.djlint"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll.ruff": true
+        }
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "editor.rulers": [88, 120],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/*.code-search": true,
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/migrations": false,
+        "**/.git": true,
+        "**/.pytest_cache": true,
+        "**/.mypy_cache": true,
+        "**/.ruff_cache": true,
+        "**/htmlcov": true,
+        "**/.coverage": true
+    },
+    "terminal.integrated.cwd": "${workspaceFolder}/taskschedule",
+    "terminal.integrated.env.osx": {
+        "DJANGO_SETTINGS_MODULE": "config.settings.local"
+    },
+    "terminal.integrated.env.linux": {
+        "DJANGO_SETTINGS_MODULE": "config.settings.local"
+    },
+    "terminal.integrated.env.windows": {
+        "DJANGO_SETTINGS_MODULE": "config.settings.local"
+    },
+    "extensions.ignoreRecommendations": false,
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#0d4f8c",
+        "activityBar.activeBorder": "#ee90bb",
+        "activityBar.background": "#0d4f8c",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#ee90bb",
+        "activityBarBadge.foreground": "#15202b",
+        "statusBar.background": "#083962",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#0d4f8c",
+        "titleBar.activeBackground": "#083962",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#08396299",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    }
+} 

@@ -1,0 +1,193 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Django: Install Requirements",
+            "type": "shell",
+            "command": "pip",
+            "args": ["install", "-r", "requirements/local.txt"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Install local development requirements"
+        },
+        {
+            "label": "Django: Collect Static Files",
+            "type": "shell",
+            "command": "python",
+            "args": ["manage.py", "collectstatic", "--noinput"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule",
+                "env": {
+                    "DJANGO_SETTINGS_MODULE": "config.settings.local"
+                }
+            },
+            "group": "build",
+            "detail": "Collect static files for Django"
+        },
+        {
+            "label": "Django: Check",
+            "type": "shell",
+            "command": "python",
+            "args": ["manage.py", "check"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule",
+                "env": {
+                    "DJANGO_SETTINGS_MODULE": "config.settings.local"
+                }
+            },
+            "group": "test",
+            "detail": "Run Django system checks"
+        },
+        {
+            "label": "Django: Shell Plus",
+            "type": "shell",
+            "command": "python",
+            "args": ["manage.py", "shell_plus"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule",
+                "env": {
+                    "DJANGO_SETTINGS_MODULE": "config.settings.local"
+                }
+            },
+            "group": "build",
+            "detail": "Start Django shell with shell_plus (requires django-extensions)"
+        },
+        {
+            "label": "Docker: Build Local",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "build"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Build local Docker containers"
+        },
+        {
+            "label": "Docker: Up Local",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "up", "-d"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Start local Docker containers in detached mode"
+        },
+        {
+            "label": "Docker: Up Local (Logs)",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "up"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Start local Docker containers with logs"
+        },
+        {
+            "label": "Docker: Down Local",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "down"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Stop local Docker containers"
+        },
+        {
+            "label": "Docker: Logs Django",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "logs", "-f", "django"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Follow Django container logs"
+        },
+        {
+            "label": "Docker: Shell Django",
+            "type": "shell",
+            "command": "docker-compose",
+            "args": ["-f", "docker-compose.local.yml", "exec", "django", "/bin/bash"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Open bash shell in Django container"
+        },
+        {
+            "label": "Linting: Run Ruff Check",
+            "type": "shell",
+            "command": "ruff",
+            "args": ["check", "."],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "test",
+            "detail": "Run Ruff linting checks"
+        },
+        {
+            "label": "Linting: Run Ruff Format",
+            "type": "shell",
+            "command": "ruff",
+            "args": ["format", "."],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Format code with Ruff"
+        },
+        {
+            "label": "Testing: Run Coverage",
+            "type": "shell",
+            "command": "coverage",
+            "args": ["run", "-m", "pytest"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule",
+                "env": {
+                    "DJANGO_SETTINGS_MODULE": "config.settings.test"
+                }
+            },
+            "group": "test",
+            "detail": "Run tests with coverage"
+        },
+        {
+            "label": "Testing: Coverage Report",
+            "type": "shell",
+            "command": "coverage",
+            "args": ["report"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "test",
+            "detail": "Show coverage report"
+        },
+        {
+            "label": "Pre-commit: Install Hooks",
+            "type": "shell",
+            "command": "pre-commit",
+            "args": ["install"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Install pre-commit hooks"
+        },
+        {
+            "label": "Pre-commit: Run All Files",
+            "type": "shell",
+            "command": "pre-commit",
+            "args": ["run", "--all-files"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "test",
+            "detail": "Run pre-commit hooks on all files"
+        }
+    ]
+} 

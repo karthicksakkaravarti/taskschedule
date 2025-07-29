@@ -1,0 +1,293 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django: Run Development Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "autoReload": {
+                "enable": true
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run with Custom Environment",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:${input:port}"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "autoReload": {
+                "enable": true
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run Production Mode",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:8000"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "autoReload": {
+                "enable": true
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run with .env File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:8000"
+            ],
+            "envFile": "${workspaceFolder}/.env",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "autoReload": {
+                "enable": true
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run Development Server (Custom Port)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:${input:port}"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "autoReload": {
+                "enable": true
+            },
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Shell",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "shell"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Migrate",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+
+            "args": [
+                "migrate"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Make Migrations",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "makemigrations"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Create Superuser",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "createsuperuser"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Celery: Worker",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "celery",
+                "worker",
+                "--loglevel=info",
+                "--concurrency=1"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Celery: Beat",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "celery",
+                "beat",
+                "--loglevel=info"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Celery: Flower",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "celery",
+                "flower",
+                "--port=5555"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "test",
+                "--keepdb",
+                "--verbosity=2"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Django: Run Specific Test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/taskschedule/manage.py",
+            "args": [
+                "test",
+                "${input:testPath}",
+                "--keepdb",
+                "--verbosity=2"
+            ],
+            "envFile": "${workspaceFolder}/taskschedule/.envs/.local/.django",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "django": true,
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/taskschedule",
+            "justMyCode": false
+        }
+    ],
+    "inputs": [
+        {
+            "id": "port",
+            "description": "Enter port number",
+            "default": "8000",
+            "type": "promptString"
+        },
+        {
+            "id": "testPath",
+            "description": "Enter test path (e.g., users.tests.test_models)",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "debugMode",
+            "description": "Enable Debug Mode?",
+            "type": "pickString",
+            "options": [
+                "True",
+                "False"
+            ],
+            "default": "True"
+        },
+        {
+            "id": "secretKey",
+            "description": "Enter Django Secret Key (leave empty for default)",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "databaseUrl",
+            "description": "Enter Database URL (leave empty for default)",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "redisUrl",
+            "description": "Enter Redis URL (leave empty for default)",
+            "default": "redis://localhost:6379/0",
+            "type": "promptString"
+        },
+        {
+            "id": "emailHost",
+            "description": "Enter Email Host (leave empty for default)",
+            "default": "localhost",
+            "type": "promptString"
+        },
+        {
+            "id": "customVar",
+            "description": "Enter any custom environment variable value",
+            "default": "",
+            "type": "promptString"
+        }
+    ]
+}
