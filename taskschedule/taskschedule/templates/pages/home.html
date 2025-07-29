@@ -1,3 +1,445 @@
 {% extends "base.html" %}
+{% load static %}
 
+{% block title %}TaskSchedule - Django + Celery Task Scheduler{% endblock title %}
 
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white">
+  <div class="absolute inset-0 bg-black opacity-10"></div>
+  <div class="relative container mx-auto px-4 py-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+        TaskSchedule
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 text-primary-100 animate-slide-down">
+        A reusable Django + Celery-based task scheduler for background jobs,
+        cron-like periodic tasks, and automation workflows
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="#get-started" class="btn btn-success btn-lg px-8 py-4 text-lg font-semibold bg-success-500 hover:bg-success-600 text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Schedule Your First Task
+        </a>
+        <a href="#features" class="btn btn-outline-secondary px-8 py-4 text-lg font-semibold border-2 border-white text-white hover:bg-white hover:text-primary-700 rounded-lg transition-all duration-300">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Powerful Task Scheduling Made Simple</h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Upload Python scripts, set schedules, and let TaskSchedule handle the rest.
+        Built on Django and Celery for reliability and scalability.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      <!-- Background Jobs -->
+      <div class="bg-white rounded-xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 8.172V5L8 4z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Background Jobs</h3>
+        <p class="text-gray-600 mb-6">
+          Execute long-running Python scripts in the background without blocking your application.
+          Perfect for data processing, file uploads, and API integrations.
+        </p>
+        <ul class="text-sm text-gray-500 space-y-2 text-left">
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Async execution
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Progress tracking
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Error handling
+          </li>
+        </ul>
+      </div>
+
+      <!-- Cron-like Tasks -->
+      <div class="bg-white rounded-xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Cron-like Scheduling</h3>
+        <p class="text-gray-600 mb-6">
+          Schedule recurring tasks with flexible timing patterns.
+          From simple intervals to complex cron expressions.
+        </p>
+        <ul class="text-sm text-gray-500 space-y-2 text-left">
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Cron expressions
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Flexible intervals
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Timezone support
+          </li>
+        </ul>
+      </div>
+
+      <!-- Automation Workflows -->
+      <div class="bg-white rounded-xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-8 h-8 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Automation Workflows</h3>
+        <p class="text-gray-600 mb-6">
+          Create complex automation workflows by chaining tasks together.
+          Build powerful data pipelines and business process automation.
+        </p>
+        <ul class="text-sm text-gray-500 space-y-2 text-left">
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Task chaining
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Conditional logic
+          </li>
+          <li class="flex items-center">
+            <svg class="w-4 h-4 text-success-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Failure recovery
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+      <p class="text-xl text-gray-600">Get your Python scripts running in the cloud in 3 simple steps</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+            1
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Upload Your Script</h3>
+          <p class="text-gray-600">
+            Upload your Python script or paste your code directly.
+            We support all common Python packages and dependencies.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+            2
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Set Schedule & Config</h3>
+          <p class="text-gray-600">
+            Define when and how often your script should run.
+            Configure environment variables and execution parameters.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+            3
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Monitor & Manage</h3>
+          <p class="text-gray-600">
+            Watch your tasks execute in real-time.
+            Get notifications, view logs, and manage your automation workflows.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Task Submission Section -->
+<section id="get-started" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Schedule Your First Task</h2>
+        <p class="text-xl text-gray-600">
+          Ready to automate? Upload your Python script and we'll get it running in minutes.
+        </p>
+      </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+        <form class="space-y-6" method="post" action="{% url 'home' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Display form errors -->
+          {% if form.errors %}
+            <div class="alert alert-danger animate-slide-down">
+              <h4 class="font-semibold mb-2">Please correct the following errors:</h4>
+              <ul class="list-disc list-inside space-y-1">
+                {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                    <li>
+                      {% if field != '__all__' %}
+                        <strong>{{ field|title }}:</strong>
+                      {% endif %}
+                      {{ error }}
+                    </li>
+                  {% endfor %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <!-- Task Name -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="form-label" for="id_name">Task Name</label>
+              <input type="text"
+                     id="id_name"
+                     name="name"
+                     class="form-control{% if form.name.errors %} border-red-500{% endif %}"
+                     placeholder="My Data Processing Task"
+                     value="{{ form.name.value|default:'' }}"
+                     required>
+              {% if form.name.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div>
+              <label class="form-label" for="id_task_type">Task Type</label>
+              <select id="id_task_type" name="task_type" class="form-control{% if form.task_type.errors %} border-red-500{% endif %}" required>
+                <option value="">Select task type</option>
+                <option value="background"{% if form.task_type.value == 'background' %} selected{% endif %}>Background Job</option>
+                <option value="scheduled"{% if form.task_type.value == 'scheduled' %} selected{% endif %}>Scheduled Task</option>
+                <option value="workflow"{% if form.task_type.value == 'workflow' %} selected{% endif %}>Automation Workflow</option>
+              </select>
+              {% if form.task_type.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ form.task_type.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+                    <!-- Script Upload -->
+          <div class="space-y-4">
+            <label class="form-label">Python Script</label>
+            {% if form.script_file.errors or form.script_content.errors %}
+              <div class="text-red-500 text-sm mb-2">Either upload a file or paste code below</div>
+            {% endif %}
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary-400 transition-colors duration-300">
+              <div class="space-y-4">
+                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div>
+                  <label for="id_script_file" class="cursor-pointer">
+                    <span class="text-primary-600 font-medium hover:text-primary-500">Upload a Python file</span>
+                    <input id="id_script_file" name="script_file" type="file" accept=".py" class="sr-only">
+                  </label>
+                  <p class="text-gray-500">or drag and drop</p>
+                </div>
+                <p class="text-xs text-gray-500">
+                  Supports .py files up to 10MB
+                </p>
+              </div>
+            </div>
+
+            <!-- Or paste code -->
+            <div class="text-center text-gray-500">
+              <span>— OR —</span>
+            </div>
+
+            <div>
+              <label class="form-label" for="id_script_content">Paste Your Python Code</label>
+              <textarea id="id_script_content"
+                        name="script_content"
+                        rows="8"
+                        class="form-control font-mono text-sm{% if form.script_content.errors %} border-red-500{% endif %}"
+                        placeholder="# Paste your Python code here
+import pandas as pd
+import requests
+
+def main():
+    # Your code here
+    print('Hello, TaskSchedule!')
+
+if __name__ == '__main__':
+    main()">{{ form.script_content.value|default:'' }}</textarea>
+              {% if form.script_content.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ form.script_content.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+                    <!-- Schedule Configuration -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="form-label" for="id_schedule_type">Schedule Type</label>
+              <select id="id_schedule_type" name="schedule_type" class="form-control{% if form.schedule_type.errors %} border-red-500{% endif %}">
+                <option value="once"{% if form.schedule_type.value == 'once' or not form.schedule_type.value %} selected{% endif %}>Run Once</option>
+                <option value="interval"{% if form.schedule_type.value == 'interval' %} selected{% endif %}>Recurring Interval</option>
+                <option value="cron"{% if form.schedule_type.value == 'cron' %} selected{% endif %}>Cron Expression</option>
+              </select>
+              {% if form.schedule_type.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ form.schedule_type.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div>
+              <label class="form-label" for="id_schedule_value">Schedule Details</label>
+              <input type="text"
+                     id="id_schedule_value"
+                     name="schedule_value"
+                     class="form-control{% if form.schedule_value.errors %} border-red-500{% endif %}"
+                     placeholder="0 9 * * 1-5 (weekdays at 9 AM)"
+                     value="{{ form.schedule_value.value|default:'' }}">
+              {% if form.schedule_value.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ form.schedule_value.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Environment Variables -->
+          <div>
+            <label class="form-label" for="id_environment_variables">Environment Variables (Optional)</label>
+            <textarea id="id_environment_variables"
+                      name="environment_variables"
+                      rows="3"
+                      class="form-control font-mono text-sm{% if form.environment_variables.errors %} border-red-500{% endif %}"
+                      placeholder="API_KEY=your_api_key_here
+DATABASE_URL=postgresql://user:pass@host:port/db
+DEBUG=True">{{ form.environment_variables.value|default:'' }}</textarea>
+            <p class="form-text">One per line in KEY=value format</p>
+            {% if form.environment_variables.errors %}
+              <div class="text-red-500 text-sm mt-1">{{ form.environment_variables.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center pt-6">
+            <button type="submit" class="btn btn-primary btn-lg px-12 py-4 text-lg font-semibold">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Schedule Task
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="py-20 bg-primary-900 text-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">Why Choose TaskSchedule?</h2>
+      <p class="text-xl text-primary-100">
+        Built for developers, by developers. Reliable, scalable, and easy to use.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">99.9% Uptime</h3>
+        <p class="text-primary-200 text-sm">Reliable execution with built-in failure recovery</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Auto Scaling</h3>
+        <p class="text-primary-200 text-sm">Handles any workload with Celery's distributed workers</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Secure</h3>
+        <p class="text-primary-200 text-sm">Enterprise-grade security with encrypted storage</p>
+      </div>
+
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Real-time Monitoring</h3>
+        <p class="text-primary-200 text-sm">Live dashboards and detailed execution logs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-success-600 text-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-4xl font-bold mb-4">Ready to Automate Your Workflows?</h2>
+    <p class="text-xl mb-8 text-success-100">
+      Join thousands of developers who trust TaskSchedule for their automation needs.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="#get-started" class="btn btn-lg bg-white text-success-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-lg shadow-lg transition-all duration-300">
+        Get Started Free
+      </a>
+      {% if not request.user.is_authenticated %}
+        <a href="{% url 'account_signup' %}" class="btn btn-outline-secondary border-2 border-white text-white hover:bg-white hover:text-success-600 px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300">
+          Create Account
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock content %}

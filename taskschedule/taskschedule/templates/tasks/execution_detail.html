@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Execution {{ execution.id }} - TaskSchedule{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="{% url 'tasks:dashboard' %}" class="text-gray-500 hover:text-primary-600">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="{% url 'tasks:detail' execution.task.pk %}" class="ml-1 text-gray-500 hover:text-primary-600 md:ml-2">{{ execution.task.name }}</a>
+              </div>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="ml-1 text-gray-500 md:ml-2">Execution {{ execution.id }}</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-900 mt-2">Execution Details</h1>
+        <p class="text-gray-600 mt-1">Task: {{ execution.task.name }}</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex space-x-3">
+        <a href="{% url 'tasks:execution_logs' execution.task.pk %}" class="btn btn-secondary">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+          All Executions
+        </a>
+
+        {% if execution.status == 'running' %}
+          <div class="btn btn-warning">
+            <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Running...
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- Main Content -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Execution Status -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Execution Status</h2>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center
+                {% if execution.status == 'success' %}bg-green-100
+                {% elif execution.status == 'failed' %}bg-red-100
+                {% elif execution.status == 'running' %}bg-blue-100
+                {% else %}bg-gray-100{% endif %}">
+                <svg class="w-6 h-6
+                  {% if execution.status == 'success' %}text-green-600
+                  {% elif execution.status == 'failed' %}text-red-600
+                  {% elif execution.status == 'running' %}text-blue-600 animate-spin
+                  {% else %}text-gray-600{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {% if execution.status == 'success' %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  {% elif execution.status == 'failed' %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  {% elif execution.status == 'running' %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  {% else %}
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  {% endif %}
+                </svg>
+              </div>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-medium text-gray-900">{{ execution.get_status_display }}</h3>
+              <p class="text-sm text-gray-500">
+                {% if execution.status == 'success' %}
+                  Task completed successfully
+                {% elif execution.status == 'failed' %}
+                  Task execution failed
+                {% elif execution.status == 'running' %}
+                  Task is currently running
+                {% else %}
+                  Task is pending execution
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Execution Details -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Execution Details</h2>
+        </div>
+        <div class="p-6">
+          <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Execution ID</dt>
+              <dd class="mt-1 text-sm text-gray-900 font-mono">{{ execution.id }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Celery Task ID</dt>
+              <dd class="mt-1 text-sm text-gray-900 font-mono">{{ execution.celery_task_id|default:"Not assigned" }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Started At</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ execution.created_at|date:"F j, Y, g:i:s a" }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Completed At</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {% if execution.completed_at %}
+                  {{ execution.completed_at|date:"F j, Y, g:i:s a" }}
+                {% else %}
+                  Not completed yet
+                {% endif %}
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Duration</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {% if execution.completed_at %}
+                  {{ execution.completed_at|timeuntil:execution.created_at }}
+                {% else %}
+                  Running...
+                {% endif %}
+              </dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Retry Count</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ execution.retry_count }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <!-- Output and Logs -->
+      {% if execution.output or execution.error_message %}
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Output & Logs</h2>
+        </div>
+        <div class="p-6">
+          {% if execution.output %}
+            <div class="mb-6">
+              <h3 class="text-sm font-medium text-gray-700 mb-2">Standard Output</h3>
+              <pre class="bg-gray-50 rounded-lg p-4 text-sm font-mono text-gray-800 overflow-x-auto"><code>{{ execution.output }}</code></pre>
+            </div>
+          {% endif %}
+
+          {% if execution.error_message %}
+            <div>
+              <h3 class="text-sm font-medium text-red-700 mb-2">Error Output</h3>
+              <pre class="bg-red-50 rounded-lg p-4 text-sm font-mono text-red-800 overflow-x-auto"><code>{{ execution.error_message }}</code></pre>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Task Configuration -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Task Configuration</h2>
+        </div>
+        <div class="p-6">
+          <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Task Name</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ execution.task.name }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Task Type</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ execution.task.get_task_type_display }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Schedule Type</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ execution.task.get_schedule_type_display }}</dd>
+            </div>
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Schedule Value</dt>
+              <dd class="mt-1 text-sm text-gray-900 font-mono">{{ execution.task.schedule_value|default:"Not scheduled" }}</dd>
+            </div>
+
+            <div class="sm:col-span-2">
+              <dt class="text-sm font-medium text-gray-500">Environment Variables</dt>
+              <dd class="mt-1 text-sm text-gray-900">
+                {% if execution.task.environment_variables %}
+                  <pre class="bg-gray-50 rounded p-2 text-xs font-mono">{{ execution.task.environment_variables }}</pre>
+                {% else %}
+                  None
+                {% endif %}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="space-y-6">
+      <!-- Quick Actions -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Quick Actions</h2>
+        </div>
+        <div class="p-6 space-y-3">
+          <a href="{% url 'tasks:detail' execution.task.pk %}" class="btn btn-secondary w-full">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+            View Task
+          </a>
+
+          <form method="post" action="{% url 'tasks:execute' execution.task.pk %}" class="inline w-full">
+            {% csrf_token %}
+            <input type="hidden" name="confirm" value="on">
+            <button type="submit" class="btn btn-primary w-full">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Run Again
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Related Executions -->
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-900">Recent Executions</h2>
+        </div>
+        <div class="p-6">
+          {% with recent_executions=execution.task.executions.all|slice:":5" %}
+            {% if recent_executions %}
+              <div class="space-y-3">
+                {% for recent_execution in recent_executions %}
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                      <div class="flex-shrink-0">
+                        <div class="w-2 h-2 rounded-full
+                          {% if recent_execution.status == 'success' %}bg-green-400
+                          {% elif recent_execution.status == 'failed' %}bg-red-400
+                          {% elif recent_execution.status == 'running' %}bg-blue-400
+                          {% else %}bg-gray-400{% endif %}"></div>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">{{ recent_execution.get_status_display }}</p>
+                        <p class="text-xs text-gray-500">{{ recent_execution.created_at|date:"M j, g:i a" }}</p>
+                      </div>
+                    </div>
+                    {% if recent_execution.id != execution.id %}
+                      <a href="{% url 'tasks:execution_detail' recent_execution.pk %}" class="text-primary-600 hover:text-primary-500 text-sm">
+                        View
+                      </a>
+                    {% else %}
+                      <span class="text-gray-400 text-sm">Current</span>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="text-center py-4 text-gray-500">
+                <p class="text-sm">No other executions</p>
+              </div>
+            {% endif %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -2,16 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import include
-from django.urls import path
+from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-from drf_spectacular.views import SpectacularAPIView
-from drf_spectacular.views import SpectacularSwaggerView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 
+from taskschedule.tasks.views import home_view
+
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    # Home page with task submission
+    path("", home_view, name="home"),
     path(
         "about/",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -22,6 +23,8 @@ urlpatterns = [
     # User management
     path("users/", include("taskschedule.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    # Tasks management
+    path("tasks/", include("taskschedule.tasks.urls", namespace="tasks")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files

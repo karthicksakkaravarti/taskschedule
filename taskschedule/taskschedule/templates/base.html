@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>
       {% block title %}
-      taskschedule
+      Task Schedule
     {% endblock title %}
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,18 +17,16 @@
         content="Karthick Sakkaravarthi" />
   <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}" />
   {% block css %}
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer" />
-<!-- Your stuff: Third-party CSS libraries go here -->
-<!-- This file stores project-specific CSS -->
+    <!-- Tailwind CSS -->
+    <link href="{% static 'css/dist/styles.css' %}" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Your stuff: Third-party CSS libraries go here -->
 
-  
-  <link href="{% static 'css/project.css' %}" rel="stylesheet" />
-
+    <!-- This file stores project-specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet" />
 
 {% endblock css %}
 <!-- Le javascript
@@ -36,102 +34,140 @@
 {# Placed at the top of the document so pages load faster with defer #}
 {% block javascript %}
 
-
-<!-- Bootstrap JS -->
-<script defer
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
-        integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"></script>
+<!-- Alpine.js for interactive components -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <!-- Your stuff: Third-party javascript libraries go here -->
 
-
 <!-- place project specific Javascript in this file -->
-
-  
   <script defer src="{% static 'js/project.js' %}"></script>
-
 
 {% endblock javascript %}
 </head>
-<body class="{% block bodyclass %}{% endblock bodyclass %}">
+<body class="{% block bodyclass %}bg-gray-50{% endblock bodyclass %}">
   {% block body %}
-  <div class="mb-1">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <div class="container-fluid">
-        <button class="navbar-toggler navbar-toggler-right"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">taskschedule</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
+  <!-- Navigation -->
+  <nav class="navbar" x-data="{ mobileMenuOpen: false }">
+    <div class="container">
+      <div class="flex justify-between items-center h-16">
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button type="button"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+                  @click="mobileMenuOpen = !mobileMenuOpen"
+                  aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <!-- Menu icon -->
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Brand -->
+        <div class="flex-shrink-0">
+          <a class="navbar-brand" href="{% url 'home' %}">Task Schedule</a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a class="nav-link active" href="{% url 'home' %}">
+              Home <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+
             {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link"
-                   href="{% url 'users:detail' request.user.pk %}">{% translate "My Profile" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-              </li>
+              <a class="nav-link" href="{% url 'users:detail' request.user.pk %}">
+                {% translate "My Profile" %}
+              </a>
+              <a class="nav-link" href="{% url 'account_logout' %}">
+                {% translate "Sign Out" %}
+              </a>
             {% else %}
               {% if ACCOUNT_ALLOW_REGISTRATION %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
-                </li>
+                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">
+                  {% translate "Sign Up" %}
+                </a>
               {% endif %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
-              </li>
+              <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">
+                {% translate "Sign In" %}
+              </a>
             {% endif %}
-          </ul>
+          </div>
         </div>
       </div>
-    </nav>
-  </div>
-  <div class="container">
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-          {{ message }}
-          <button type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"></button>
-        </div>
-      {% endfor %}
-    {% endif %}
-    {% block main %}
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
-    {% endblock main %}
 
-  </div>
+      <!-- Mobile Navigation Menu -->
+      <div class="md:hidden" x-show="mobileMenuOpen" x-transition>
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+          <a class="block nav-link" href="{% url 'home' %}">Home</a>
+          <a class="block nav-link" href="{% url 'about' %}">About</a>
+
+          {% if request.user.is_authenticated %}
+            <a class="block nav-link" href="{% url 'users:detail' request.user.pk %}">
+              {% translate "My Profile" %}
+            </a>
+            <a class="block nav-link" href="{% url 'account_logout' %}">
+              {% translate "Sign Out" %}
+            </a>
+          {% else %}
+            {% if ACCOUNT_ALLOW_REGISTRATION %}
+              <a id="sign-up-link" class="block nav-link" href="{% url 'account_signup' %}">
+                {% translate "Sign Up" %}
+              </a>
+            {% endif %}
+            <a id="log-in-link" class="block nav-link" href="{% url 'account_login' %}">
+              {% translate "Sign In" %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1">
+    <div class="container py-8">
+      {% if messages %}
+        <div class="mb-6 space-y-2" x-data="{ show: true }" x-show="show" x-transition>
+          {% for message in messages %}
+            <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} relative">
+              {{ message }}
+              <button type="button"
+                      class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                      @click="show = false">
+                <span class="sr-only">Close</span>
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block main %}
+        {% block content %}
+          <div class="text-center py-12">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Task Schedule</h1>
+            <p class="text-lg text-gray-600">Use this document as a way to quick start any new project.</p>
+          </div>
+        {% endblock content %}
+      {% endblock main %}
+    </div>
+  </main>
+
   {% endblock body %}
-  <!-- /container -->
+
   {% block modal %}
   {% endblock modal %}
+
   {% block inline_javascript %}
     {% comment %}
     Script tags with only code, no src (defer by default). To run
     with a "defer" so that you run inline code:
     <script>
-      window.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', () => {
         /* Run whatever you want */
       });
     </script>

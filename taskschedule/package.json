@@ -1,0 +1,23 @@
+{
+  "name": "taskschedule",
+  "version": "1.0.0",
+  "description": "Django Task Schedule App with Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./taskschedule/static/css/input.css -o ./taskschedule/static/css/dist/styles.css --watch",
+    "build": "tailwindcss -i ./taskschedule/static/css/input.css -o ./taskschedule/static/css/dist/styles.css --minify",
+    "build-dev": "tailwindcss -i ./taskschedule/static/css/input.css -o ./taskschedule/static/css/dist/styles.css"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "tailwindcss": "^3.4.0"
+  },
+  "keywords": [
+    "django",
+    "tailwindcss",
+    "task-scheduler"
+  ],
+  "author": "Karthick Sakkaravarthi",
+  "license": "MIT"
+}

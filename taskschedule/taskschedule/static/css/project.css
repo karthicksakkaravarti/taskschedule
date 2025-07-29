@@ -1,13 +1,65 @@
-/* These styles are generated from project.scss. */
+/* Custom styles for the TaskSchedule app using Tailwind CSS */
 
+/* Custom alert styles that extend Tailwind components */
 .alert-debug {
-  color: black;
-  background-color: white;
-  border-color: #d6e9c6;
+  @apply bg-gray-50 border-gray-200 text-gray-800;
 }
 
 .alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+  @apply bg-red-50 border-red-200 text-red-800;
+}
+
+/* Custom animations for smooth interactions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  .navbar .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Focus styles for better accessibility */
+.focus-visible {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }

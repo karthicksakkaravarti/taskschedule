@@ -3,39 +3,68 @@
 {% load static %}
 
 {% block title %}
-  User: 
-  
-    {{ object.name }}
-  
-  
+  User: {{ object.name }}
 {% endblock title %}
+
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <h2>
-        
-        
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white shadow rounded-lg overflow-hidden">
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h1 class="text-2xl font-bold text-gray-900">
           {{ object.name }}
-        
-      </h2>
+        </h1>
+      </div>
+
+      <!-- User Info -->
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Profile Information</h3>
+            <dl class="space-y-3">
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Name</dt>
+                <dd class="text-sm text-gray-900">{{ object.name }}</dd>
+              </div>
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Email</dt>
+                <dd class="text-sm text-gray-900">{{ object.email }}</dd>
+              </div>
+              <div>
+                <dt class="text-sm font-medium text-gray-500">Date Joined</dt>
+                <dd class="text-sm text-gray-900">{{ object.date_joined|date:"F d, Y" }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      {% if object == request.user %}
+        <!-- Action buttons -->
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+          <div class="flex flex-wrap gap-3">
+            <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              My Info
+            </a>
+            <a class="btn btn-secondary" href="{% url 'account_email' %}" role="button">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Email Settings
+            </a>
+            <a class="btn btn-secondary" href="{% url 'mfa_index' %}" role="button">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              MFA Settings
+            </a>
+            <!-- Your Stuff: Custom user template urls -->
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
-  {% if object == request.user %}
-    <!-- Action buttons -->
-    <div class="row">
-      <div class="col-sm-12">
-        <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">My Info</a>
-        <a class="btn btn-primary"
-           href="{% url 'account_email' %}"
-           role="button">E-Mail</a>
-        <a class="btn btn-primary"
-           href="{% url 'mfa_index' %}"
-           role="button">MFA</a>
-        <!-- Your Stuff: Custom user template urls -->
-      </div>
-    </div>
-    <!-- End Action buttons -->
-  {% endif %}
-</div>
 {% endblock content %}

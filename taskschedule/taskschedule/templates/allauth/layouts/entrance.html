@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block bodyclass %}bg-light{% endblock bodyclass %}
+{% block bodyclass %}bg-gray-100{% endblock bodyclass %}
 
 {% block css %}{{ block.super }}{% endblock css %}
 {% block title %}
@@ -8,22 +8,41 @@
     {% trans "Sign In" %}
   {% endblock head_title %}
 {% endblock title %}
+
 {% block body %}
-  <div class="d-flex justify-content-center h-100 py-4">
-    <div class="col-md-4 py-4 my-4 px-4">
+  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+      <!-- Logo/Brand -->
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-900">Task Schedule</h2>
+        <p class="mt-2 text-sm text-gray-600">
+          {% block subtitle %}
+            Welcome back! Please sign in to continue.
+          {% endblock subtitle %}
+        </p>
+      </div>
+
       {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-            {{ message }}
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-          </div>
-        {% endfor %}
+        <div class="mb-6 space-y-2">
+          {% for message in messages %}
+            <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} relative" x-data="{ show: true }" x-show="show" x-transition>
+              {{ message }}
+              <button type="button"
+                      class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                      @click="show = false">
+                <span class="sr-only">Close</span>
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
+
       {% block content %}
       {% endblock content %}
+
       {% block extra_body %}
       {% endblock extra_body %}
     </div>

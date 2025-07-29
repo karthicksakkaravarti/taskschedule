@@ -188,6 +188,28 @@
             },
             "group": "test",
             "detail": "Run pre-commit hooks on all files"
+        },
+        {
+            "label": "Tailwind: Build CSS",
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "build"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Build Tailwind CSS for production"
+        },
+        {
+            "label": "Tailwind: Watch CSS",
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "dev"],
+            "options": {
+                "cwd": "${workspaceFolder}/taskschedule"
+            },
+            "group": "build",
+            "detail": "Watch and rebuild Tailwind CSS during development"
         }
     ]
-} 
+}

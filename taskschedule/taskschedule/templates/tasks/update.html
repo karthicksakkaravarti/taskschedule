@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit {{ task.name }} - TaskSchedule{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <nav class="flex" aria-label="Breadcrumb">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+            <li class="inline-flex items-center">
+              <a href="{% url 'tasks:dashboard' %}" class="text-gray-500 hover:text-primary-600">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <a href="{% url 'tasks:detail' task.pk %}" class="ml-1 text-gray-500 hover:text-primary-600 md:ml-2">{{ task.name }}</a>
+              </div>
+            </li>
+            <li>
+              <div class="flex items-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="ml-1 text-gray-500 md:ml-2">Edit</span>
+              </div>
+            </li>
+          </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-gray-900 mt-2">Edit Task</h1>
+        <p class="text-gray-600 mt-1">Update your task configuration and settings</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Task Configuration</h2>
+      </div>
+
+      <form method="post" class="p-6 space-y-6">
+        {% csrf_token %}
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+          <div class="alert alert-danger animate-slide-down">
+            <h4 class="font-semibold mb-2">Please correct the following errors:</h4>
+            <ul class="list-disc list-inside space-y-1">
+              {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                  <li>
+                    {% if field != '__all__' %}
+                      <strong>{{ field|title }}:</strong>
+                    {% endif %}
+                    {{ error }}
+                  </li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <!-- Basic Information -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            {{ form.name|as_crispy_field }}
+          </div>
+          <div>
+            {{ form.status|as_crispy_field }}
+          </div>
+        </div>
+
+        <div>
+          {{ form.description|as_crispy_field }}
+        </div>
+
+        <!-- Script Content -->
+        <div>
+          <label class="form-label">Python Script</label>
+          <div class="mt-1">
+            {{ form.script_content }}
+            {% if form.script_content.errors %}
+              <div class="text-red-500 text-sm mt-1">{{ form.script_content.errors.0 }}</div>
+            {% endif %}
+          </div>
+          <p class="form-text">Enter your Python code here. The script should have a main function or be executable directly.</p>
+        </div>
+
+        <!-- Schedule Configuration -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            {{ form.schedule_type|as_crispy_field }}
+          </div>
+          <div>
+            {{ form.schedule_value|as_crispy_field }}
+          </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            {{ form.timeout_seconds|as_crispy_field }}
+          </div>
+          <div>
+            {{ form.max_retries|as_crispy_field }}
+          </div>
+        </div>
+
+        <!-- Environment Variables -->
+        <div>
+          {{ form.environment_variables|as_crispy_field }}
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+          <div class="flex space-x-3">
+            <a href="{% url 'tasks:detail' task.pk %}" class="btn btn-secondary">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Update Task
+            </button>
+          </div>
+
+          <div class="text-sm text-gray-500">
+            Last modified: {{ task.updated_at|date:"M j, Y, g:i a" }}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
